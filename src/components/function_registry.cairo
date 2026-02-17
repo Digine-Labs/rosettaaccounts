@@ -52,10 +52,10 @@ pub mod FunctionRegistryComponent {
         fn register_function(
             ref self: ComponentState<TContractState>, fn_name: ByteArray, inputs: Span<EVMTypes>,
         ) {
-            //assert!(
-            //    self.is_dev(get_caller_address()),
-            //    "Only developers can register functions",
-            //);
+            assert!(
+                self.is_dev(get_caller_address()),
+                "Only developers can register functions",
+            );
             let (sn_entrypoint, eth_selector) = calculate_function_selectors(@fn_name);
             self.entrypoints.entry(eth_selector).write(sn_entrypoint);
 
